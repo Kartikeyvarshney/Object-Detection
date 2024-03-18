@@ -14,7 +14,8 @@ export default {
       },
       colors: {
         background: "#023047",
-        uploaderbg:"#219ebc"
+        uploaderbg:"#219ebc",
+        modalbg:'rgb(0,0,0,0.3)'
 
       },
       transitionDuration: {

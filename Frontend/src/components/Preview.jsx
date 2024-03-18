@@ -1,5 +1,6 @@
 
 import axios from 'axios'
+import PropTypes from 'prop-types'
 export default function Preview(props)
 {
 
@@ -9,21 +10,22 @@ export default function Preview(props)
     }
     async function predictImage()
     {
+      props.setShowModal(true)
       const formData = new FormData();
      
       formData.append('image',props.file)
+      props.setIsLoading(true)
       const response = await axios.post('http://localhost:8000/predict',formData,{
         headers:{
           'Content-Type': 'multipart/form-data'
         }
       }) 
-      // if(result.error)
-      // {
-  
-      // }
-    
-      console.log(response.data.result)
-      props.setResult(response.data.result)
+      if(response.data.Error){
+        console.log(response.data.Error)
+      }
+
+      props.setResult(response.data.Result)
+      props.setIsLoading(false)
   
     }
     return(
@@ -40,3 +42,12 @@ export default function Preview(props)
     
 }
 
+Preview.propTypes={
+  setImageUrl:PropTypes.func.isRequired,
+  photo:PropTypes.string.isRequired,
+  setResult:PropTypes.func.isRequired,
+  file:PropTypes.instanceOf(File).isRequired,
+  setIsLoading:PropTypes.func.isRequired,
+  setShowModal:PropTypes.func.isRequired
+
+}

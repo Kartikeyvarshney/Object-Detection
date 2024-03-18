@@ -1,11 +1,14 @@
 import { useRef, useState } from "react";
 
 import Preview from "./Preview";
-import Error from "./Error";
-// import Loader from "react-js-loader";
+// import Error from "./Error";
+import Modal from "./Modal";
+
 function Uploader() {
   const labelRef = useRef(null);
   const imageRef = useRef(null);
+  const[isLoading , setIsLoading] = useState(false)
+  const[showModal , setShowModal ] = useState(false)
   const [file , setFile] = useState(null)
   const [imageUrl , setImageUrl] = useState("")
   const[result , setResult ] = useState("")
@@ -26,8 +29,9 @@ function Uploader() {
   }
   
   return (
-
+    
     <div className="reset h-screen w-screen ">
+      { showModal && <Modal isLoading={isLoading} setShowModal={setShowModal} result={result} setResult={setResult}></Modal>}
       <div className="min-h-[500px] w-4/5  grid place-items-center ml-auto mr-auto">
           <div className="h-[400px] w-[800px]  border border-solid border-black flex items-center justify-center flex-col rounded-[10px] bg-uploaderbg">
             <span className="mb-8 text-white">Upload your Image here..</span>
@@ -41,19 +45,17 @@ function Uploader() {
               className="z-20 text-3xl select-none cursor-pointer text-white"
               ref={labelRef} // Reference to the label element
             >
-              <img src="src/assets/image.png" alt="image" style={{height:'50px',width:'70px'}}/>  
+              <img className="z-10" src="src/assets/image.png" alt="image" style={{height:'50px',width:'70px'}}/>  
             </label>
             <input type="file" name="image" id="Image" accept="image/jpg , image/png , image/jpeg" hidden ref={imageRef} onChange={handleImageChange}/></div>
             
           </div>
       </div>
-      {/* <Loader type="bubble-scale" bgColor=
-      'red' color='blue' title={"bubble-scale"} size={100} /> */}
-      {(imageUrl!="")?<Preview setImageUrl={setImageUrl} photo={imageUrl} setResult={setResult} file={file}></Preview>:<></>}
+     
+      {(imageUrl!="")?<Preview setShowModal={setShowModal} setImageUrl={setImageUrl} photo={imageUrl} setResult={setResult} file={file} setIsLoading={setIsLoading}></Preview>:<></>}
       
       {/* <Error message='this is error'></Error> */}
-      <div>{result}</div>
-      
+     
     </div>
     
     

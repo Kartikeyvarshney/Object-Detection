@@ -8,7 +8,7 @@ const cors = require('cors');
 const predict = require('./Predict');
 
 app.use(express.urlencoded({ extended: true }));
-app.use(cors());
+app.use(cors({origin:'http://localhost:5173'}));
 
 const storage = multer.diskStorage({
   destination: function(req, file, cb) {
@@ -30,9 +30,7 @@ app.post('/predict', upload.single('image'), async (req, res) => {
 
   try {
     const response = await predict(req.file.path);
-    // console.log(response);
-    
-    res.send({ result: response });
+    res.send(response);
   } catch (error) {
     res.status(500).send({ error: error.message });
   }

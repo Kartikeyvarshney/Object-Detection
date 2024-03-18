@@ -13,10 +13,13 @@ async function Predict(image) {
 
     // Run inference to detect objects
     const predictions = await model.detect(imageTensor);
-
+    if(predictions.length == 0)
+    {
+      return {Error:"Can't predict the picture."}
+    }
     // Process predictions
     console.log(predictions[0].class)
-    return predictions[0].class
+    return {Result:predictions[0].class}
   } catch (error) {
     throw new Error(error);
   }
