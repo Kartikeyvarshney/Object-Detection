@@ -30,6 +30,7 @@ app.post('/predict', upload.single('image'), async (req, res) => {
 
   try {
     const response = await predict(req.file.path);
+    console.log(response)
     res.send(response);
   } catch (error) {
     res.status(500).send({ error: error.message });

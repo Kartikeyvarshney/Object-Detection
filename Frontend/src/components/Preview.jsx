@@ -22,9 +22,13 @@ export default function Preview(props)
       }) 
       if(response.data.Error){
         console.log(response.data.Error)
+        props.setResult(response.data.Error)
+      }
+      else{
+        props.setResult(response.data.Result)
       }
 
-      props.setResult(response.data.Result)
+      
       props.setIsLoading(false)
   
     }
